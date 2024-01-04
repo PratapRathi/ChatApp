@@ -1,3 +1,4 @@
+import './App.css'
 // routes
 import Router from "./routes";
 // theme
