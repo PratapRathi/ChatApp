@@ -17,7 +17,7 @@ const SideBar = () => {
         <Box
             p={2}
             sx={{
-                backgroundColor: theme.palette.background.paper,
+                backgroundColor: theme.palette.mode === "light"? "#F0F4FA" : theme.palette.background.paper,
                 boxShadow: "0px 0px 2px rgba(0, 0, 0, 0.25)",
                 height: "100vh",
                 width: 100
