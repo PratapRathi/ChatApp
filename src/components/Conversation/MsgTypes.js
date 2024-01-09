@@ -5,7 +5,7 @@ import { DotsThreeVertical, DownloadSimple, Image } from 'phosphor-react';
 import { Message_options } from '../../data';
 
 
-const DocMsg = ({ el }) => {
+const DocMsg = ({ el, menu }) => {
     const theme = useTheme();
     return (
         <Stack direction="row" alignItems="center" justifyContent={el.incoming ? "flex-start" : "flex-end"}>
@@ -20,12 +20,12 @@ const DocMsg = ({ el }) => {
                 </Stack>
             </Box>
             {/* Message Options */}
-            <MessageOptions />
+            {menu && <MessageOptions />}
         </Stack>
     )
 }
 
-const LinkMsg = ({ el }) => {
+const LinkMsg = ({ el, menu }) => {
     const theme = useTheme();
     return (
         <Stack direction="row" justifyContent={el.incoming ? "flex-start" : "flex-end"}>
@@ -42,12 +42,12 @@ const LinkMsg = ({ el }) => {
                 </Stack>
             </Box>
             {/* Message Options */}
-            <MessageOptions />
+            {menu && <MessageOptions />}
         </Stack>
     )
 }
 
-const ReplyMsg = ({ el }) => {
+const ReplyMsg = ({ el, menu }) => {
     const theme = useTheme();
     return (
         <Stack direction="row" justifyContent={el.incoming ? "flex-start" : "flex-end"}>
@@ -60,12 +60,12 @@ const ReplyMsg = ({ el }) => {
                 </Stack>
             </Box>
             {/* Message Options */}
-            <MessageOptions />
+            {menu && <MessageOptions />}
         </Stack>
     )
 }
 
-const MediaMsg = ({ el }) => {
+const MediaMsg = ({ el, menu }) => {
     const theme = useTheme();
     return (
         <Stack direction="row" alignItems="center" justifyContent={el.incoming ? "flex-start" : "flex-end"}>
@@ -76,12 +76,12 @@ const MediaMsg = ({ el }) => {
                 </Stack>
             </Box>
             {/* Message Options */}
-            <MessageOptions />
+            {menu && <MessageOptions />}
         </Stack>
     )
 }
 
-const TextMsg = ({ el }) => {
+const TextMsg = ({ el, menu }) => {
     const theme = useTheme();
     return (
         <Stack direction="row" alignItems="center" justifyContent={el.incoming ? "flex-start" : "flex-end"}>
@@ -91,7 +91,7 @@ const TextMsg = ({ el }) => {
                 </Typography>
             </Box>
             {/* Message Options */}
-            <MessageOptions />
+            {menu && <MessageOptions />}
         </Stack>
     )
 }
@@ -103,8 +103,6 @@ const Timeline = ({ el }) => {
             <Divider width="46%" />
             <Typography variant='caption' sx={{ color: theme.palette.text }}>{el.text}</Typography>
             <Divider width="46%" />
-            {/* Message Options */}
-            <MessageOptions />
         </Stack>
     )
 }

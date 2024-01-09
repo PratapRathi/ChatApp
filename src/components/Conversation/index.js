@@ -14,7 +14,7 @@ const Conversation = () => {
 
             {/* Message */}
             <Box className='scrollbar' width={"100%"} sx={{ flexGrow: 1, height:"100%", overflowY:"scroll"}}>
-                <Message />
+                <Message menu={true}/>
             </Box>
 
             {/* Chat Footer */}
