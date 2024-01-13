@@ -3,10 +3,12 @@ import { Navigate, useRoutes } from "react-router-dom";
 
 // layouts
 import DashboardLayout from "../layouts/dashboard";
+import AuthLayout from "../layouts/auth/index.js";
 
 // config
 import { DEFAULT_PATH } from "../config";
 import LoadingScreen from "../components/LoadingScreen";
+
 
 const Loadable = (Component) => (props) => {
   return (
@@ -18,6 +20,16 @@ const Loadable = (Component) => (props) => {
 
 export default function Router() {
   return useRoutes([
+    {
+      path: "/auth",
+      element: <AuthLayout/>,
+      children:[
+        { path: "login", element: <LoginPage/>},
+        { path: "register", element: <RegisterPage/>},
+        { path: "reset-password", element: <ResetPasswordPage/>},
+        { path: "new-password", element: <NewPasswordPage/>},
+      ]
+    },
     {
       path: "/",
       element: <DashboardLayout />,
@@ -33,12 +45,16 @@ export default function Router() {
   ]);
 }
 
-const GeneralApp = Loadable(
-  lazy(() => import("../pages/dashboard/GeneralApp")),
-);
+const GeneralApp = Loadable(lazy(() => import("../pages/dashboard/GeneralApp")));
 
-const Settings = Loadable(
-  lazy(() => import("../pages/dashboard/Settings")),
-);
+const LoginPage = Loadable(lazy(() => import("../pages/auth/Login")));
+
+const RegisterPage = Loadable(lazy(() => import("../pages/auth/Register.js")));
+
+const ResetPasswordPage = Loadable(lazy(() => import("../pages/auth/ResetPassword.js")));
+
+const NewPasswordPage = Loadable(lazy(() => import("../pages/auth/NewPassword.js")));
+
+const Settings = Loadable(lazy(() => import("../pages/dashboard/Settings")));
 
 const Page404 = Loadable(lazy(() => import("../pages/Page404")));

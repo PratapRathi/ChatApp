@@ -1,5 +1,6 @@
 import React from 'react'
-import { Box, Divider, IconButton, Link, Menu, MenuItem, Stack, Typography } from '@mui/material'
+import {Link} from "react-router-dom";
+import { Box, Divider, IconButton, Menu, MenuItem, Stack, Typography } from '@mui/material'
 import { useTheme } from '@mui/material/styles'
 import { DotsThreeVertical, DownloadSimple, Image } from 'phosphor-react';
 import { Message_options } from '../../data';
@@ -35,7 +36,7 @@ const LinkMsg = ({ el, menu }) => {
                         <img src={el.preview} alt={el.message} style={{ maxHeight: 210, borderRadius: "10px" }} />
                         <Stack spacing={2}>
                             <Typography variant='subtitle2'>Creating Chat App</Typography>
-                            <Typography variant='subtitle2' sx={{ color: theme.palette.primary.main }} to="//https://in.linkedin.com/in/pratap-rathi" component={Link}>https://in.linkedin.com/in/pratap-rathi</Typography>
+                            <Typography variant='subtitle2' sx={{ color: theme.palette.primary.main }} target="_blank" to="//https://www.linkedin.com/in/pratap-rathi/"  component={Link}>https://www.linkedin.com/in/pratap-rathi</Typography>
                         </Stack>
                         <Typography variant='body2' color={el.incoming ? theme.palette.text : "#fff"}>{el.message}</Typography>
                     </Stack>
