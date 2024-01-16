@@ -10,7 +10,7 @@ import CreateGroup from "../../sections/main/CreateGroup.js";
 const Group = () => {
   const theme = useTheme();
   const [openDialog, setOpenDialog] = useState(false);
-  const handleCloseBlock = () => {
+  const handleCloseDialog = () => {
     setOpenDialog(false);
   };
   return (
@@ -67,7 +67,7 @@ const Group = () => {
         {/* //TODO => Reuse Conversation component */}
 
       </Stack>
-      {openDialog && <CreateGroup open={openDialog} handleClose={handleCloseBlock}/>}
+      {openDialog && <CreateGroup open={openDialog} handleClose={handleCloseDialog}/>}
     </>
   );
 };
