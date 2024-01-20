@@ -7,8 +7,40 @@ import { Gear } from "phosphor-react";
 import { faker } from '@faker-js/faker';
 import AntSwitch from "../../components/AntSwitch.js"
 import useSettings from "../../hooks/useSettings.js";
+import { useNavigate } from 'react-router-dom';
+
+
+const getPath = (index) => {
+    switch (index) {
+        case 0:
+            return "/app";
+        case 1:
+            return "/group";
+        case 2:
+            return "/call";
+        case 3:
+            return "/settings";
+        default:
+            break;
+    }
+}
+const getMenuPath = (index) => {
+    switch (index) {
+        case 0:
+            return "/profile";
+        case 1:
+            return "/settings";
+        case 2:
+            // TODO => Update token & set isAuth = false;
+            return "/auth/login";
+        default:
+            break;
+    }
+}
+
 
 const SideBar = () => {
+    const navigate = useNavigate();
     const theme = useTheme();
     const [selected, setSelectecd] = useState(0);
     const { onToggleMode } = useSettings();
@@ -17,6 +49,7 @@ const SideBar = () => {
     const open = Boolean(anchorEl);
     const handleClick = (event) => {
         setAnchorEl(event.currentTarget);
+        console.log(anchorEl);
     };
     const handleClose = () => {
         setAnchorEl(null);
@@ -49,7 +82,7 @@ const SideBar = () => {
                                 <Box key={el.index} sx={{ backgroundColor: theme.palette.primary.main, borderRadius: 1.5 }}>
                                     <IconButton key={el.index} sx={{ width: "max-content", color: "#fff" }}>{el.icon}</IconButton>
                                 </Box>
-                                : <IconButton onClick={() => { setSelectecd(el.index) }} key={el.index} sx={{ width: "max-content", color: theme.palette.mode === "light" ? "#000" : theme.palette.text.primary }}>{el.icon}</IconButton>
+                                : <IconButton onClick={() => { setSelectecd(el.index); navigate(getPath(el.index)); }} key={el.index} sx={{ width: "max-content", color: theme.palette.mode === "light" ? "#000" : theme.palette.text.primary }}>{el.icon}</IconButton>
                         ))}
                         <Divider sx={{ width: "48px" }} />
                         {selected === 3 ? (
@@ -59,7 +92,7 @@ const SideBar = () => {
                                 </IconButton>
                             </Box>
                         ) : (
-                            <IconButton onClick={() => { setSelectecd(3) }} sx={{ width: "max-content", color: theme.palette.mode === "light" ? "#000" : theme.palette.text.primary }}>
+                            <IconButton onClick={() => { setSelectecd(3); navigate(getPath(3)); }} sx={{ width: "max-content", color: theme.palette.mode === "light" ? "#000" : theme.palette.text.primary }}>
                                 <Gear />
                             </IconButton>
                         )
@@ -70,7 +103,7 @@ const SideBar = () => {
                 <Stack spacing={4} alignItems="center">
                     <AntSwitch onChange={() => { onToggleMode() }} defaultChecked />
                     <Avatar src={faker.image.avatar()}
-                        sx={{cursor:"pointer"}}
+                        sx={{ cursor: "pointer" }}
                         id="profile-button"
                         aria-controls={open ? 'profile-menu' : undefined}
                         aria-haspopup="true"
@@ -84,13 +117,13 @@ const SideBar = () => {
                         MenuListProps={{
                             'aria-labelledby': 'profile-button',
                         }}
-                        anchorOrigin={{vertical:"bottom",horizontal:"right"}}
-                        transformOrigin={{vertical:"bottom",horizontal:"left"}}
+                        anchorOrigin={{ vertical: "bottom", horizontal: "right" }}
+                        transformOrigin={{ vertical: "bottom", horizontal: "left" }}
                     >
                         <Stack spacing={1} px={1}>
-                            {Profile_Menu.map((el) =>
-                                <MenuItem onClick={handleClick}>
-                                    <Stack direction="row" alignItems="center" justifyContent="space-between" sx={{ width: 100 }}>
+                            {Profile_Menu.map((el, idx) =>
+                                <MenuItem onClick={handleClose}>
+                                    <Stack onClick={() => { navigate(getMenuPath(idx)) }} direction="row" alignItems="center" justifyContent="space-between" sx={{ width: 100 }}>
                                         <span>{el.title}</span>
                                         {el.icon}
                                     </Stack>
