@@ -56,8 +56,8 @@ const ChatInput = ({ setOpenPicker }) => {
                 startAdornment: (
                     <Stack sx={{ width: "max-content" }}>
                         <Stack sx={{ position: "relative", display: openActions ? "inline-block" : "none" }}>
-                            {Actions.map((el) => (
-                                <Tooltip title={el.title} placement="right">
+                            {Actions.map((el, idx) => (
+                                <Tooltip key={idx} title={el.title} placement="right">
                                     <Fab sx={{ position: "absolute", top: -el.y, backgroundColor: el.color }}>
                                         {el.icon}
                                     </Fab>
@@ -65,12 +65,12 @@ const ChatInput = ({ setOpenPicker }) => {
                             ))}
                         </Stack>
 
-                        <InputAdornment>
-                            <IconButton><LinkSimple onClick={() => { setOpenActions((prev) => !prev) }} /></IconButton>
+                        <InputAdornment position='start'>
+                            <IconButton onClick={() => { setOpenActions((prev) => !prev) }} ><LinkSimple /></IconButton>
                         </InputAdornment>
                     </Stack>
                 ),
-                endAdornment: <InputAdornment><IconButton onClick={() => { setOpenPicker((prev) => !prev) }}><Smiley /></IconButton></InputAdornment>
+                endAdornment: <InputAdornment position='end'><IconButton onClick={() => { setOpenPicker((prev) => !prev) }}><Smiley /></IconButton></InputAdornment>
             }}>
         </StyledInput>
     )

@@ -116,8 +116,8 @@ const Contact = () => {
             <Button onClick={() => { dispatch(UpdateSidebarType("SHARED")) }} endIcon={<CaretRight />}>{"201"}</Button>
           </Stack>
           <Stack direction="row" spacing={2} alignItems="center">
-            {[1, 2, 3].map((el) => (
-              <Box><img src={faker.image.food()} alt={faker.name.fullName} /></Box>
+            {[1, 2, 3].map((el, idx) => (
+              <Box key={idx}><img src={faker.image.food()} alt={faker.name.fullName()} /></Box>
             ))}
           </Stack>
 

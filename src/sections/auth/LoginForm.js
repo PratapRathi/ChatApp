@@ -5,7 +5,9 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import FormProvider from "../../components/hook-form/FormProvider";
 import { RHFTextField } from "../../components/hook-form";
 import { Eye, EyeSlash } from "phosphor-react";
-import {Link as RouterLink} from "react-router-dom"
+import {Link as RouterLink} from "react-router-dom";
+import { LoginUser } from "../../redux/slices/auth.js";
+import { useDispatch } from "react-redux";
 import {
   Alert,
   Button,
@@ -17,7 +19,7 @@ import {
 } from "@mui/material";
 
 const LoginForm = () => {
-
+  const dispatch = useDispatch();
   const theme = useTheme();
   const [showPassword, setShowPassword] = useState(false);
 
@@ -29,8 +31,8 @@ const LoginForm = () => {
   });
 
   const defaultValues = {
-    email: "demo@tawk.com",
-    password: "demo1234",
+    email: "",
+    password: "",
   };
 
   const methods = useForm({
@@ -49,6 +51,7 @@ const LoginForm = () => {
   const onSubmit = async (data) => {
     try {
       // Submit data to Backend
+      dispatch(LoginUser(data));
       reset();
     } catch (error) {
       console.log(error);
@@ -70,7 +73,7 @@ const LoginForm = () => {
           type={showPassword ? "text" : "password"}
           InputProps={{
             endAdornment: (
-              <InputAdornment>
+              <InputAdornment position="end">
                 <IconButton onClick={() => setShowPassword(!showPassword)}>
                   {showPassword ? <Eye /> : <EyeSlash />}
                 </IconButton>

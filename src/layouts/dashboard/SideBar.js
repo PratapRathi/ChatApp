@@ -8,6 +8,8 @@ import { faker } from '@faker-js/faker';
 import AntSwitch from "../../components/AntSwitch.js"
 import useSettings from "../../hooks/useSettings.js";
 import { useNavigate } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
+import { LogoutUser } from '../../redux/slices/auth.js';
 
 
 const getPath = (index) => {
@@ -40,6 +42,7 @@ const getMenuPath = (index) => {
 
 
 const SideBar = () => {
+    const dispatch = useDispatch();
     const navigate = useNavigate();
     const theme = useTheme();
     const [selected, setSelectecd] = useState(0);
@@ -49,7 +52,6 @@ const SideBar = () => {
     const open = Boolean(anchorEl);
     const handleClick = (event) => {
         setAnchorEl(event.currentTarget);
-        console.log(anchorEl);
     };
     const handleClose = () => {
         setAnchorEl(null);
@@ -122,7 +124,13 @@ const SideBar = () => {
                     >
                         <Stack spacing={1} px={1}>
                             {Profile_Menu.map((el, idx) =>
-                                <MenuItem onClick={handleClose}>
+                                <MenuItem key={idx} onClick={()=>{
+                                    handleClose();
+                                    // If index=2 (Logout Button) then perform logout action
+                                    if(idx===2){
+                                        dispatch(LogoutUser());
+                                    }
+                                }}>
                                     <Stack onClick={() => { navigate(getMenuPath(idx)) }} direction="row" alignItems="center" justifyContent="space-between" sx={{ width: 100 }}>
                                         <span>{el.title}</span>
                                         {el.icon}
