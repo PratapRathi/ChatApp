@@ -5,28 +5,27 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import FormProvider from "../../components/hook-form/FormProvider";
 import { RHFTextField } from "../../components/hook-form";
 import { Eye, EyeSlash } from "phosphor-react";
-import {
-    Alert,
-    Button,
-    IconButton,
-    InputAdornment,
-    Stack,
-    useTheme,
-} from "@mui/material";
+import { useDispatch } from "react-redux";
+import { NewPassword } from "../../redux/slices/auth";
+import { Navigate, useSearchParams } from "react-router-dom";
+import {Alert,Button,IconButton,InputAdornment,Stack,useTheme} from "@mui/material";
 
 
 const NewPasswordForm = () => {
+    const dispatch = useDispatch();
+    const[queryParameters] = useSearchParams();
+    const token = queryParameters.get("token");
 
     const theme = useTheme();
     const [showPassword, setShowPassword] = useState(false);
 
     const NewPasswordSchema = Yup.object().shape({
-        newPassword: Yup.string().min(6, "Password must be at least 6 charaters").required("Password is required"),
-        confirmPassword: Yup.string().required("Password is required").oneOf([Yup.ref("newPassword"), null], "Password must match"),
+        password: Yup.string().min(6, "Password must be at least 6 charaters").required("Password is required"),
+        confirmPassword: Yup.string().required("Password is required").oneOf([Yup.ref("password"), null], "Password must match"),
     });
 
     const defaultValues = {
-        newPassword: "",
+        password: "",
         confirmPassword: "",
     };
 
@@ -46,6 +45,7 @@ const NewPasswordForm = () => {
     const onSubmit = async (data) => {
         try {
             // Submit data to Backend
+            dispatch(NewPassword({password:data.password, token:token}));
             reset();
         } catch (error) {
             console.log(error);
@@ -54,6 +54,10 @@ const NewPasswordForm = () => {
         }
     };
 
+    if(!token){
+        return <Navigate to="/auth/login" />
+      }
+
     return (
         <FormProvider methods={methods} onSubmit={handleSubmit(onSubmit)}>
             <Stack spacing={3}>
@@ -61,12 +65,12 @@ const NewPasswordForm = () => {
                     <Alert severity="error">{errors.afterSubmit.message}</Alert>
                 )}
                 <RHFTextField
-                    name="newPassword"
+                    name="password"
                     label="New Password"
                     type={showPassword ? "text" : "password"}
                     InputProps={{
                         endAdornment: (
-                            <InputAdornment>
+                            <InputAdornment position="end">
                                 <IconButton onClick={() => setShowPassword(!showPassword)}>
                                     {showPassword ? <Eye /> : <EyeSlash />}
                                 </IconButton>
@@ -80,7 +84,7 @@ const NewPasswordForm = () => {
                     type={showPassword ? "text" : "password"}
                     InputProps={{
                         endAdornment: (
-                            <InputAdornment>
+                            <InputAdornment position="end">
                                 <IconButton onClick={() => setShowPassword(!showPassword)}>
                                     {showPassword ? <Eye /> : <EyeSlash />}
                                 </IconButton>

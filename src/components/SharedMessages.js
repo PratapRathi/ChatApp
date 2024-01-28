@@ -41,8 +41,8 @@ const SharedMessages = () => {
                                 // Images
                                 return <Grid container spacing={2}>
                                     {
-                                        [0, 1, 2, 3, 4, 5, 6, 7, 8].map((el) =>
-                                            <Grid item xs={4}>
+                                        [0, 1, 2, 3, 4, 5, 6, 7, 8].map((el, idx) =>
+                                            <Grid key={idx} item xs={4}>
                                                 <img src={faker.image.avatar()} alt={faker.name.fullName()} />
                                             </Grid>
                                         )
@@ -50,10 +50,10 @@ const SharedMessages = () => {
                                 </Grid>
                             case 1:
                                 // Links
-                                return SHARED_LINKS.map((el) => <LinkMsg el={el} />)
+                                return SHARED_LINKS.map((el, idx) => <LinkMsg key={idx} el={el} />)
                             case 2:
                                 //Docs
-                                return SHARED_DOCS.map((el) => <DocMsg el={el} />)
+                                return SHARED_DOCS.map((el, idx) => <DocMsg key={idx} el={el} />)
                             default:
                                 break;
                         }

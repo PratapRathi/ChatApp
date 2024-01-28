@@ -26,6 +26,7 @@ export default function Router() {
       children:[
         { path: "login", element: <LoginPage/>},
         { path: "register", element: <RegisterPage/>},
+        { path: "verify-otp", element: <VerifyOTPPage/>},
         { path: "reset-password", element: <ResetPasswordPage/>},
         { path: "new-password", element: <NewPasswordPage/>},
       ]
@@ -53,6 +54,8 @@ const GeneralApp = Loadable(lazy(() => import("../pages/dashboard/GeneralApp")))
 const LoginPage = Loadable(lazy(() => import("../pages/auth/Login")));
 
 const RegisterPage = Loadable(lazy(() => import("../pages/auth/Register.js")));
+
+const VerifyOTPPage = Loadable(lazy(() => import("../pages/auth/VerifyOTP.js")));
 
 const ResetPasswordPage = Loadable(lazy(() => import("../pages/auth/ResetPassword.js")));
 

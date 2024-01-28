@@ -6,10 +6,12 @@ import FormProvider from "../../components/hook-form/FormProvider";
 import { Alert, Button, IconButton, InputAdornment, Stack, useTheme } from '@mui/material';
 import { RHFTextField } from "../../components/hook-form";
 import { Eye, EyeSlash } from 'phosphor-react';
+import { useDispatch } from 'react-redux';
+import { RegisterUser } from '../../redux/slices/auth';
 
 
 const RegisterForm = () => {
-
+    const dispatch = useDispatch();
     const theme = useTheme();
     const [showPassword, setShowPassword] = useState(false);
 
@@ -25,8 +27,8 @@ const RegisterForm = () => {
     const defaultValues = {
         firstName: "",
         lastName: "",
-        email: "demo@tawk.com",
-        password: "demo1234",
+        email: "",
+        password: "",
     };
 
     const methods = useForm({
@@ -45,6 +47,7 @@ const RegisterForm = () => {
     const onSubmit = async (data) => {
         try {
             // Submit data to Backend
+            dispatch(RegisterUser(data));
             reset();
         } catch (error) {
             console.log(error);
@@ -70,7 +73,7 @@ const RegisterForm = () => {
                     type={showPassword ? "text" : "password"}
                     InputProps={{
                         endAdornment: (
-                            <InputAdornment>
+                            <InputAdornment position='end'>
                                 <IconButton onClick={() => setShowPassword(!showPassword)}>
                                     {showPassword ? <Eye /> : <EyeSlash />}
                                 </IconButton>
