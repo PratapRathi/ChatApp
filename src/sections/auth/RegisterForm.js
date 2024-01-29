@@ -6,12 +6,14 @@ import FormProvider from "../../components/hook-form/FormProvider";
 import { Alert, Button, IconButton, InputAdornment, Stack, useTheme } from '@mui/material';
 import { RHFTextField } from "../../components/hook-form";
 import { Eye, EyeSlash } from 'phosphor-react';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { RegisterUser } from '../../redux/slices/auth';
+import { LoadingButton } from '@mui/lab';
 
 
 const RegisterForm = () => {
     const dispatch = useDispatch();
+    const {isLoading} = useSelector((state)=> state.auth);
     const theme = useTheme();
     const [showPassword, setShowPassword] = useState(false);
 
@@ -81,8 +83,9 @@ const RegisterForm = () => {
                         ),
                     }}
                 />
-                <Button
+                <LoadingButton
                     fullWidth
+                    loading={isLoading}
                     color="inherit"
                     size="large"
                     type="submit"
@@ -97,7 +100,7 @@ const RegisterForm = () => {
                     }}
                 >
                     Create Account
-                </Button>
+                </LoadingButton>
             </Stack>
         </FormProvider>
     )

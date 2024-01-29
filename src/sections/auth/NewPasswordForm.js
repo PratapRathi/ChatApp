@@ -5,14 +5,16 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import FormProvider from "../../components/hook-form/FormProvider";
 import { RHFTextField } from "../../components/hook-form";
 import { Eye, EyeSlash } from "phosphor-react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { NewPassword } from "../../redux/slices/auth";
 import { Navigate, useSearchParams } from "react-router-dom";
 import {Alert,Button,IconButton,InputAdornment,Stack,useTheme} from "@mui/material";
+import { LoadingButton } from "@mui/lab";
 
 
 const NewPasswordForm = () => {
     const dispatch = useDispatch();
+    const {isLoading} = useSelector((state)=> state.auth);
     const[queryParameters] = useSearchParams();
     const token = queryParameters.get("token");
 
@@ -93,8 +95,9 @@ const NewPasswordForm = () => {
                     }}
                 />
 
-                <Button
+                <LoadingButton
                     fullWidth
+                    loading={isLoading}
                     color="inherit"
                     size="large"
                     type="submit"
@@ -109,7 +112,7 @@ const NewPasswordForm = () => {
                     }}
                 >
                     Submit
-                </Button>
+                </LoadingButton>
 
             </Stack>
         </FormProvider>

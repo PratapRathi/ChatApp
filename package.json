@@ -9,6 +9,7 @@
     "@emotion/styled": "^11.10.4",
     "@hookform/resolvers": "^3.3.4",
     "@iconify/react": "^4.0.0",
+    "@mui/lab": "^5.0.0-alpha.162",
     "@mui/material": "^5.10.8",
     "@reduxjs/toolkit": "^2.0.1",
     "@testing-library/jest-dom": "^5.16.5",

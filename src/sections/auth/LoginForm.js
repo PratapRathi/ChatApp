@@ -7,19 +7,13 @@ import { RHFTextField } from "../../components/hook-form";
 import { Eye, EyeSlash } from "phosphor-react";
 import {Link as RouterLink} from "react-router-dom";
 import { LoginUser } from "../../redux/slices/auth.js";
-import { useDispatch } from "react-redux";
-import {
-  Alert,
-  Button,
-  IconButton,
-  InputAdornment,
-  Link,
-  Stack,
-  useTheme,
-} from "@mui/material";
+import { useDispatch, useSelector } from "react-redux";
+import { LoadingButton } from "@mui/lab";
+import { Alert, IconButton, InputAdornment, Link, Stack, useTheme} from "@mui/material";
 
 const LoginForm = () => {
   const dispatch = useDispatch();
+  const {isLoading} = useSelector((state)=> state.auth);
   const theme = useTheme();
   const [showPassword, setShowPassword] = useState(false);
 
@@ -85,8 +79,9 @@ const LoginForm = () => {
       <Stack alignItems="flex-end" sx={{ my: 2 }}>
         <Link variant="body2" color="inherit" underline="always" component={RouterLink} to="/auth/reset-password">Forgot Password ?</Link>
       </Stack>
-      <Button
+      <LoadingButton
         fullWidth
+        loading={isLoading}
         color="inherit"
         size="large"
         type="submit"
@@ -101,7 +96,7 @@ const LoginForm = () => {
         }}
       >
         Login
-      </Button>
+      </LoadingButton>
     </FormProvider>
   );
 };

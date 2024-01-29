@@ -7,10 +7,12 @@ import { Button, Stack, useTheme } from '@mui/material';
 import RHFCodes from '../../components/hook-form/RHFCodes';
 import { useDispatch, useSelector } from 'react-redux';
 import { VerifyEmail } from '../../redux/slices/auth';
+import { LoadingButton } from '@mui/lab';
 
 
 const VerifyOTPForm = () => {
     const dispatch = useDispatch();
+    const {isLoading} = useSelector((state)=> state.auth);
     const {email} = useSelector((state)=>state.auth);
     const theme = useTheme();
 
@@ -61,8 +63,9 @@ const VerifyOTPForm = () => {
                 <RHFCodes keyName='code' inputs={["code1","code2","code3","code4","code5","code6"]}/>
 
 
-                <Button
+                <LoadingButton
                     fullWidth
+                    loading={isLoading}
                     color="inherit"
                     size="large"
                     type="submit"
@@ -76,7 +79,7 @@ const VerifyOTPForm = () => {
                         },
                     }}>
                     Verify
-                </Button>
+                </LoadingButton>
 
             </Stack>
         </FormProvider>

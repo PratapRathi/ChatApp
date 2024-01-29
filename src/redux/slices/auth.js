@@ -1,5 +1,7 @@
 import { createSlice } from "@reduxjs/toolkit";
 import axios from "../../utils/axios";
+// reducers from other app-state
+import { openSnackbar } from "./app";
 
 const initialState = {
     isLoggedIn: false,
@@ -39,35 +41,42 @@ export default slice.reducer;
 export function LoginUser(formValues) {
     // formValues => {email,password}
     return async (dispatch, getState) => {
+        dispatch(slice.actions.updateIsLoading({isLoading: true, error: false}));
         await axios.post("/auth/login", {...formValues}, {
             headers: {
                 "Content-Type": "application/json"
             }
         }).then(function(response){
+            dispatch(slice.actions.updateIsLoading({isLoading: false, error: false}));
+            dispatch(openSnackbar("success", response.data.message));
             dispatch(slice.actions.login({isLoggedIn:true, token:response.data.token}));
-            console.log(response);
         }).catch(function(error){
-            console.log(error);
+            dispatch(slice.actions.updateIsLoading({isLoading: false, error: true}));
+            dispatch(openSnackbar("error", error.response.data.message));
         })
     }
 }
 
 export function LogoutUser(){
     return async (dispatch, getState) => {
+        dispatch(openSnackbar("success", "Logged Out Successfully"));
         dispatch(slice.actions.signOut());
     }
 }
 
 export function ForgotPassword(formValues){
     return async (dispatch, getState) => {
+        dispatch(slice.actions.updateIsLoading({isLoading: true, error: false}));
         await axios.post("/auth/forgot-password",{...formValues}, {
             headers: {
                 "Content-Type": "application/json"
             }
         }).then((response)=>{
-            console.log(response);
+            dispatch(slice.actions.updateIsLoading({isLoading: false, error: false}));
+            dispatch(openSnackbar("success", response.data.message));
         }).catch((error)=>{
-            console.log(error);
+            dispatch(slice.actions.updateIsLoading({isLoading: false, error: true}));
+            dispatch(openSnackbar("error", error.response.data.message));
         })
     }
 }
@@ -75,15 +84,18 @@ export function ForgotPassword(formValues){
 
 export function NewPassword(formValues){
     return async (dispatch, getState) => {
+        dispatch(slice.actions.updateIsLoading({isLoading: true, error: false}));
         await axios.post("/auth/reset-password",{...formValues},{
             headers: {
                 "Content-Type": "application/json"
             }
         }).then((response)=>{
+            dispatch(slice.actions.updateIsLoading({isLoading: false, error: false}));
+            dispatch(openSnackbar("success", response.data.message));
             dispatch(slice.actions.login({isLoggedIn:true, token:response.data.token}));
-            console.log(response);
         }).catch((error)=>{
-            console.log(error);
+            dispatch(slice.actions.updateIsLoading({isLoading: false, error: true}));
+            dispatch(openSnackbar("error", error.response.data.message));
         })
     }
 }
@@ -96,11 +108,11 @@ export function RegisterUser(formValues){
                 "Content-Type": "application/json"
             }
         }).then((response)=>{
-            console.log(response);
+            dispatch(openSnackbar("success", response.data.message));
             dispatch(slice.actions.updateRegisterEmail({email:formValues.email}));
             dispatch(slice.actions.updateIsLoading({isLoading: false, error: false}));
         }).catch((error)=>{
-            console.log(error)
+            dispatch(openSnackbar("error", error.response.data.message));
             dispatch(slice.actions.updateIsLoading({isLoading: false, error: true}));
         }).finally(()=>{
             if(!getState().auth.error){
@@ -113,15 +125,18 @@ export function RegisterUser(formValues){
 
 export function VerifyEmail(formValues){
     return async (dispatch,getState) => {
+        dispatch(slice.actions.updateIsLoading({isLoading: true, error: false}));
         await axios.post("/auth/verify-otp",{...formValues},{
             headers:{
                 "Content-Type": "application/json"
             }
         }).then((response)=>{
+            dispatch(slice.actions.updateIsLoading({isLoading: false, error: false}));
+            dispatch(openSnackbar("success", response.data.message));
             dispatch(slice.actions.login({isLoggedIn:true, token:response.data.token}));
-            console.log(response);
         }).catch((error)=>{
-            console.log(error)
+            dispatch(slice.actions.updateIsLoading({isLoading: false, error: true}));
+            dispatch(openSnackbar("error", error.response.data.message));
         })
     }
 }
