@@ -1,23 +1,37 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Box, IconButton, Stack, Typography, Button, Divider } from '@mui/material';
-import { ArchiveBox, CircleDashed, MagnifyingGlass } from 'phosphor-react';
+import { ArchiveBox, CircleDashed, MagnifyingGlass, Users } from 'phosphor-react';
 import { useTheme } from '@mui/material/styles';
 import { SimpleBarStyle} from "../../components/Scrollbar";
 import { ChatList } from '../../data';
 import { Search, SearchIconWrapper, StyledInputBase } from '../../components/Search/index.js';
 import ChatElement from '../../components/ChatElement.js';
+import Friends from '../../sections/main/Friends.js';
 
 
 const Chats = () => {
     const theme = useTheme();
+    const [openDialog, setOpenDialog] = useState(false);
+    const handleOpenDialog = ()=> {
+        setOpenDialog(true);
+    }
+    const handleCloseDialog = ()=> {
+        setOpenDialog(false);
+    }
     return (
+        <>
         <Box sx={{ position: "relative", width: 320, boxShadow: "0px 0px 2px rgba(0,0,0,0.25)", backgroundColor: theme.palette.mode === "light"? "#F8FAFF" : theme.palette.background.default }}>
             <Stack p={3} spacing={2} sx={{ height: "100vh" }}>
                 <Stack direction="row" alignItems="center" justifyContent="space-between">
                     <Typography variant='h5'>Chats</Typography>
+                    <Stack direction="row" justifyContent="center" alignItems="center" spacing={0.3}>
+                    <IconButton onClick={()=>{handleOpenDialog()}}>
+                        <Users/>
+                    </IconButton>
                     <IconButton>
                         <CircleDashed />
                     </IconButton>
+                    </Stack>
                 </Stack>
 
                 <Stack sx={{ width: "100%" }}>
@@ -50,6 +64,8 @@ const Chats = () => {
 
             </Stack>
         </Box>
+        {openDialog && <Friends open={openDialog} handleClose={handleCloseDialog} />}
+        </>
     )
 }
 

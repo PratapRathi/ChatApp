@@ -2,12 +2,15 @@ import React from 'react'
 import { Avatar, Badge, Box, Stack, Typography } from '@mui/material';
 import StyledBadge from './StyledBadge';
 import { useTheme } from '@mui/material/styles';
+import { useDispatch } from 'react-redux';
+import {SelectConversation} from '../redux/slices/app'
 
 
 const ChatElement = ({ id, name, img, msg, time, unread, online }) => {
+    const dispatch = useDispatch();
     const theme = useTheme();
     return (
-        <Box sx={{ width: "100%", borderRadius: 1, backgroundColor: theme.palette.mode === "light" ? "#fff" : theme.palette.background.default }} p={2}>
+        <Box onClick={()=>{dispatch(SelectConversation({room_id: id}))}} sx={{ cursor:"pointer", width: "100%", borderRadius: 1, backgroundColor: theme.palette.mode === "light" ? "#fff" : theme.palette.background.default }} p={2}>
             <Stack direction="row" spacing={2} alignItems="center" justifyContent="space-between">
                 <Stack direction="row" spacing={2}>
                     {online ? <StyledBadge overlap="circular" anchorOrigin={{ vertical: 'bottom', horizontal: 'right' }} variant="dot">

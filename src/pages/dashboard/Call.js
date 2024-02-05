@@ -49,7 +49,7 @@ const Call = () => {
                             <SimpleBarStyle timeout={500} clickOnTrack={false}>
                                 <Stack spacing={2.4}>
                                     {/* Call Logs */}
-                                    {CallLogs.map((el) => <CallLogElement {...el} />)}
+                                    {CallLogs.map((el, idx) => <CallLogElement key={idx} {...el} />)}
                                 </Stack>
                             </SimpleBarStyle>
                         </Stack>

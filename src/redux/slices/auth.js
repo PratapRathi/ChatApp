@@ -50,6 +50,7 @@ export function LoginUser(formValues) {
             dispatch(slice.actions.updateIsLoading({isLoading: false, error: false}));
             dispatch(openSnackbar("success", response.data.message));
             dispatch(slice.actions.login({isLoggedIn:true, token:response.data.token}));
+            window.localStorage.setItem("user_id", response.data.user_id);
         }).catch(function(error){
             dispatch(slice.actions.updateIsLoading({isLoading: false, error: true}));
             dispatch(openSnackbar("error", error.response.data.message));
@@ -61,6 +62,8 @@ export function LogoutUser(){
     return async (dispatch, getState) => {
         dispatch(openSnackbar("success", "Logged Out Successfully"));
         dispatch(slice.actions.signOut());
+        dispatch(slice.actions.updateIsLoading({isLoading: false, error: false}));
+        window.localStorage.removeItem("user_id");
     }
 }
 
@@ -93,6 +96,7 @@ export function NewPassword(formValues){
             dispatch(slice.actions.updateIsLoading({isLoading: false, error: false}));
             dispatch(openSnackbar("success", response.data.message));
             dispatch(slice.actions.login({isLoggedIn:true, token:response.data.token}));
+            window.localStorage.setItem("user_id", response.data.user_id);
         }).catch((error)=>{
             dispatch(slice.actions.updateIsLoading({isLoading: false, error: true}));
             dispatch(openSnackbar("error", error.response.data.message));
@@ -134,6 +138,7 @@ export function VerifyEmail(formValues){
             dispatch(slice.actions.updateIsLoading({isLoading: false, error: false}));
             dispatch(openSnackbar("success", response.data.message));
             dispatch(slice.actions.login({isLoggedIn:true, token:response.data.token}));
+            window.localStorage.setItem("user_id", response.data.user_id);
         }).catch((error)=>{
             dispatch(slice.actions.updateIsLoading({isLoading: false, error: true}));
             dispatch(openSnackbar("error", error.response.data.message));
