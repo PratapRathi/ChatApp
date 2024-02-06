@@ -40,7 +40,7 @@ const VerifyOTPForm = () => {
         defaultValues,
     });
 
-    const { formState, handleSubmit } = methods;
+    const { handleSubmit } = methods;
 
     const onSubmit = async (data) => {
         try {

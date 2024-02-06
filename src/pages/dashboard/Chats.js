@@ -23,7 +23,7 @@ const Chats = () => {
             // data => list of existing conversation
             dispatch(FetchDirectConversation({conversations:data}));
         })
-    },[]);
+    },[]); // eslint-disable-line react-hooks/exhaustive-deps
     const handleOpenDialog = ()=> {
         setOpenDialog(true);
     }

@@ -11,7 +11,7 @@ const UsersList = ()=>{
 
     useEffect(()=>{
         dispatch(fetchUsers());
-    },[]);
+    },[]); // eslint-disable-line react-hooks/exhaustive-deps
 
     const {users} = useSelector((state)=> state.app);
 
@@ -32,7 +32,7 @@ const FriendList = ()=>{
 
     useEffect(()=>{
         dispatch(fetchFriends());
-    },[]);
+    },[]); // eslint-disable-line react-hooks/exhaustive-deps
 
     const {friends} = useSelector((state)=> state.app);
 
@@ -53,7 +53,7 @@ const FriendRequestList = ()=>{
 
     useEffect(()=>{
         dispatch(fetchRequests());
-    },[]);
+    },[]); // eslint-disable-line react-hooks/exhaustive-deps
 
     const {friendRequests} = useSelector((state)=> state.app);
 

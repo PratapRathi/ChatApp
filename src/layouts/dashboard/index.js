@@ -67,7 +67,7 @@ const DashboardLayout = () => {
       socket?.off("start_chat");
       socket?.off("new_text_message");
     }
-  },[isLoggedIn, socket])
+  },[isLoggedIn, socket]) // eslint-disable-line react-hooks/exhaustive-deps
 
   if(!isLoggedIn){
     return <Navigate to="/auth/login" />

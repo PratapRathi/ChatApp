@@ -29,7 +29,7 @@ const Message = ({ menu }) => {
                 dispatch(UpdateCurrentMessages({ selected_messages: current_messages }));
             }
         })
-    }, [conversation_id]);
+    }, [conversation_id]); // eslint-disable-line react-hooks/exhaustive-deps
     return (
         <Box p={3}>
             <Stack spacing={3}>
