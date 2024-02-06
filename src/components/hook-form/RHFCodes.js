@@ -3,7 +3,6 @@ import { Stack, TextField } from '@mui/material';
 import { Controller, useFormContext } from 'react-hook-form';
 
 const RHFCodes = ({ keyName='', inputs = [], ...other }) => {
-    const CodesRef = useRef();
     const { control } = useFormContext();
 
     const handleChangeWithNextField = (event,handleChange) => {

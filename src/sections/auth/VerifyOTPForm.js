@@ -3,7 +3,7 @@ import * as Yup from "yup";
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import FormProvider from '../../components/hook-form/FormProvider';
-import { Button, Stack, useTheme } from '@mui/material';
+import { Stack, useTheme } from '@mui/material';
 import RHFCodes from '../../components/hook-form/RHFCodes';
 import { useDispatch, useSelector } from 'react-redux';
 import { VerifyEmail } from '../../redux/slices/auth';

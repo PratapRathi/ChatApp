@@ -8,7 +8,7 @@ import { Eye, EyeSlash } from "phosphor-react";
 import { useDispatch, useSelector } from "react-redux";
 import { NewPassword } from "../../redux/slices/auth";
 import { Navigate, useSearchParams } from "react-router-dom";
-import {Alert,Button,IconButton,InputAdornment,Stack,useTheme} from "@mui/material";
+import {Alert,IconButton,InputAdornment,Stack,useTheme} from "@mui/material";
 import { LoadingButton } from "@mui/lab";
 
 

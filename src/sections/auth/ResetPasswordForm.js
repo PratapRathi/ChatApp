@@ -4,7 +4,7 @@ import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import FormProvider from "../../components/hook-form/FormProvider";
 import { RHFTextField } from "../../components/hook-form";
-import { Alert, Button, Stack, useTheme } from "@mui/material";
+import { Alert, Stack, useTheme } from "@mui/material";
 import { useDispatch, useSelector } from "react-redux";
 import { ForgotPassword } from "../../redux/slices/auth";
 import { LoadingButton } from "@mui/lab";

@@ -1,6 +1,5 @@
-import React, { useEffect } from 'react'
+import React, { useEffect } from 'react';
 import { Box, Stack } from '@mui/material';
-import { Chat_History } from '../../data';
 import { DocMsg, LinkMsg, MediaMsg, ReplyMsg, TextMsg, Timeline } from './MsgTypes';
 import { useDispatch, useSelector } from 'react-redux';
 import { socket } from '../../socket.js'
