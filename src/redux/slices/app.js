@@ -1,5 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit";
 import axios from "../../utils/axios";
+import { UpdateCurrentConversation } from "./conversation";
 
 const initialState = {
     sidebar: {
@@ -146,5 +147,7 @@ export function fetchRequests(){
 export const SelectConversation = ({room_id}) => {
     return async(dispatch, getState) => {
         dispatch(slice.actions.selectConversation({room_id}));
+        const selected_conversation = getState().conversation.direct_chat.conversation.filter((el)=> el.id===room_id)[0];
+        dispatch(UpdateCurrentConversation({selected_conversation}));
     }
 }

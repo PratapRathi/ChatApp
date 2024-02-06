@@ -5,10 +5,11 @@ import { useTheme } from '@mui/material/styles';
 import { CaretDown, MagnifyingGlass, Phone, VideoCamera } from 'phosphor-react';
 import StyledBadge from '../StyledBadge';
 import { ToggleSidebar } from '../../redux/slices/app';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 
 
 const Header = () => {
+    const {current_conversation} = useSelector((state)=> state.conversation.direct_chat);
     const theme = useTheme();
     const dispatch = useDispatch();
     return (
@@ -22,8 +23,8 @@ const Header = () => {
                     </Box>
 
                     <Stack spacing={0.2}>
-                        <Typography variant='subtitle2'>{faker.name.fullName()}</Typography>
-                        <Typography variant='caption'>Online</Typography>
+                        <Typography variant='subtitle2'>{current_conversation.name}</Typography>
+                        <Typography variant='caption'>{current_conversation.online?"Online":"Offline"}</Typography>
                     </Stack>
                 </Stack>
 

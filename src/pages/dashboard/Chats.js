@@ -1,17 +1,29 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Box, IconButton, Stack, Typography, Button, Divider } from '@mui/material';
 import { ArchiveBox, CircleDashed, MagnifyingGlass, Users } from 'phosphor-react';
 import { useTheme } from '@mui/material/styles';
 import { SimpleBarStyle} from "../../components/Scrollbar";
-import { ChatList } from '../../data';
 import { Search, SearchIconWrapper, StyledInputBase } from '../../components/Search/index.js';
 import ChatElement from '../../components/ChatElement.js';
 import Friends from '../../sections/main/Friends.js';
+import { socket } from '../../socket.js';
+import { useDispatch, useSelector } from 'react-redux';
+import { FetchDirectConversation } from '../../redux/slices/conversation.js';
 
+
+const user_id = window.localStorage.getItem("user_id");
 
 const Chats = () => {
     const theme = useTheme();
+    const {conversation} = useSelector((state)=> state.conversation.direct_chat);
+    const dispatch = useDispatch();
     const [openDialog, setOpenDialog] = useState(false);
+    useEffect(()=>{
+        socket.emit("get_direct_conversations", {user_id}, (data)=>{
+            // data => list of existing conversation
+            dispatch(FetchDirectConversation({conversations:data}));
+        })
+    },[]);
     const handleOpenDialog = ()=> {
         setOpenDialog(true);
     }
@@ -54,10 +66,10 @@ const Chats = () => {
                 <Stack className='scrollbar' direction="column" sx={{ flexGrow: 1, overflowY: "auto", height: '100%' }} >
                     <SimpleBarStyle timeout={500} clickOnTrack={false}> 
                             <Stack spacing={2.4}>
-                                <Typography variant='subtitle2' sx={{ color: '#676667' }}>Pinned</Typography>
-                                {ChatList.filter((el) => el.pinned).map((el, i) => { return <ChatElement key={i} {...el} />; })}
+                                {/* <Typography variant='subtitle2' sx={{ color: '#676667' }}>Pinned</Typography>
+                                {ChatList.filter((el) => el.pinned).map((el, i) => { return <ChatElement key={i} {...el} />; })} */}
                                 <Typography variant='subtitle2' sx={{ color: '#676667' }}>All Chats</Typography>
-                                {ChatList.filter((el) => !el.pinned).map((el, i) => { return <ChatElement key={i} {...el} />; })}
+                                {conversation.filter((el) => !el.pinned).map((el, i) => { return <ChatElement key={i} {...el} />; })}
                             </Stack>
                     </SimpleBarStyle>
                 </Stack>

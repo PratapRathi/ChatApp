@@ -4,6 +4,10 @@ import { Camera, File, Image, LinkSimple, PaperPlaneTilt, Smiley, Sticker, User 
 import { styled, useTheme } from '@mui/material/styles';
 import Picker from '@emoji-mart/react'
 import data from '@emoji-mart/data'
+import {socket} from '../../socket';
+import { useSelector } from 'react-redux';
+
+const user_id = window.localStorage.getItem("user_id");
 
 
 const StyledInput = styled(TextField)(({ theme }) => ({
@@ -46,15 +50,15 @@ const Actions = [
     },
 ];
 
-const ChatInput = ({ setOpenPicker }) => {
+const ChatInput = ({ setOpenPicker, inputMsg, setInputMsg }) => {
     const [openActions, setOpenActions] = useState(false);
     return (
-        <StyledInput fullWidth placeholder='Write a message...' variant='filled'
+        <StyledInput value={inputMsg} onChange={(e)=> setInputMsg(e.target.value)} fullWidth placeholder='Write a message...' variant='filled'
             InputProps=
             {{
                 disableUnderline: true,
                 startAdornment: (
-                    <Stack sx={{ width: "max-content" }}>
+                    <Stack justifyContent="center" alignItems="center" sx={{ width: "max-content" }}>
                         <Stack sx={{ position: "relative", display: openActions ? "inline-block" : "none" }}>
                             {Actions.map((el, idx) => (
                                 <Tooltip key={idx} title={el.title} placement="right">
@@ -77,8 +81,19 @@ const ChatInput = ({ setOpenPicker }) => {
 }
 
 const Footer = () => {
+    const {current_conversation} = useSelector((state)=> state.conversation.direct_chat)
     const theme = useTheme();
     const [openPicker, setOpenPicker] = useState(false);
+    const [inputMsg, setInputMsg] = useState("")
+    const onMsgSend = () => {
+        socket.emit("text_message", {
+            to: current_conversation.user_id,
+            from: user_id,
+            message: inputMsg,
+            conversation_id: current_conversation.id,
+        })
+        setInputMsg("");
+    }
     return (
         <Box p={2} sx={{ width: "100%", boxShadow: "0px 0px 2px rgba(0,0,0,0.25)", backgroundColor: theme.palette.mode === "light" ? "#F8FAFF" : theme.palette.background.default }}>
             <Stack direction="row" alignItems="center" spacing={3}>
@@ -87,13 +102,13 @@ const Footer = () => {
                     <Box sx={{ display: openPicker ? "inline" : "none", zIndex: 10, position: "fixed", bottom: 81, right: 100 }}>
                         <Picker data={data} onEmojiSelect={console.log} theme={theme.palette.mode} />
                     </Box>
-                    <ChatInput setOpenPicker={setOpenPicker} />
+                    <ChatInput setOpenPicker={setOpenPicker} inputMsg= {inputMsg} setInputMsg={setInputMsg} />
                 </Stack>
 
                 {/* Chat Send button */}
                 <Box sx={{ height: 48, width: 48, borderRadius: 1.5, backgroundColor: theme.palette.primary.main }}>
                     <Stack alignItems="center" justifyContent="center" sx={{ width: "100%", height: "100%" }}>
-                        <IconButton>
+                        <IconButton onClick={onMsgSend}>
                             <PaperPlaneTilt color='#fff' />
                         </IconButton>
                     </Stack>
